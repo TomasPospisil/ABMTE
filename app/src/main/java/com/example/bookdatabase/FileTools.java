@@ -21,17 +21,24 @@ public class FileTools {
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
             String line;
-            while ( (line = bufferedReader.readLine()) != null )
-            {
+            while ((line = bufferedReader.readLine()) != null) {
                 lines.add(line);
             }
             fileInputStream.close();
             bufferedReader.close();
-        }
-        catch(Exception e) {
+        } catch(Exception e) {
             Log.d(context.getResources().getString(R.string.app_name), e.getMessage());
         }
         return lines;
+    }
+
+    public static void RemoveFile(String filename, Context context) {
+        try {
+            File file = new File(context.getFilesDir(), filename);
+            file.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void WriteTestDataToFile(String filename, Context context) {
@@ -65,5 +72,40 @@ public class FileTools {
 
     public static boolean Exists(String filename, Context context) {
         return new File(context.getFilesDir(), filename).exists();
+    }
+
+    public static void RemoveNthLineFromFile(String filename, int lineIndex, Context context) {
+        try {
+            List<String> lines = GetLinesFromFile(filename, context);
+            lines.remove(lineIndex);
+
+            RemoveFile(filename, context);
+            AppendLinesToFile(filename, lines, context);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void AppendLinesToFile(String filename, List<String> lines, Context context) {
+        try {
+            FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_APPEND);
+            for (String s : lines) {
+                outputStream.write(s.concat("\r\n").getBytes());
+            }
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void AppendLineToFile(String filename, String line, Context context) {
+        try {
+            FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_APPEND);
+            outputStream.write(line.concat("\r\n").getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

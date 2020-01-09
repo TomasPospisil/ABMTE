@@ -19,7 +19,9 @@ import android.widget.ListView;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
     ListView listView;
+    BookItemListAdapter bookItemListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +74,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void CreateBooksView() {
+    public void CreateBooksView() {
+        Log.d("BookDatabase", "Creating new!");
         String booksInfoFile = "books-info";
         if (!FileTools.Exists(booksInfoFile, this)) {
             FileTools.CreateFile(booksInfoFile, this);
         }
 
-        //WriteTestDataToFile(booksInfoFile);
+        //FileTools.RemoveFile(booksInfoFile, this);
+        //FileTools.WriteTestDataToFile(booksInfoFile, this);
         List<String> books = FileTools.GetLinesFromFile(booksInfoFile, this);
 
         String bookNames[] = new String[books.size()];
@@ -92,25 +96,23 @@ public class MainActivity extends AppCompatActivity {
             bookImages[i] = R.mipmap.image_book_unknown_foreground;
         }
 
-        BookItemListAdapter x = new BookItemListAdapter(this, bookImages, bookNames, bookAuthors);
+        bookItemListAdapter = new BookItemListAdapter(this, bookImages, bookNames, bookAuthors);
         listView = findViewById(R.id.list_books);
-        listView.setAdapter(x);
+        listView.setAdapter(bookItemListAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = (String) parent.getItemAtPosition(position);
-                Log.d(getResources().getString(R.string.app_name), "clicked: " + selectedItem);
+                bookItemListAdapter.OnShortClickEvent(parent, position, id);
             }
         });
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = (String) parent.getItemAtPosition(position);
-                Log.d(getResources().getString(R.string.app_name), "long: " + selectedItem);
-                return true;
+                return bookItemListAdapter.OnLongClickEvent(parent, position, id);
             }
         });
     }
+
 }

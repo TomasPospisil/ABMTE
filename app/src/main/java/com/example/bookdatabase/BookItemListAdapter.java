@@ -1,50 +1,55 @@
 package com.example.bookdatabase;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.database.DataSetObserver;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+
+import java.lang.*;
 
 public class BookItemListAdapter extends ArrayAdapter {
 
-    private final Activity activity;
-    private final int[] imageIds;
-    private final String[] bookNames;
-    private final String[] authorNames;
-
-    private boolean deleteMode = false;
+    public final MainActivity activity;
+    public int[] imageIds;
+    public String[] bookNames;
+    public String[] authorNames;
 
     public BookItemListAdapter(Activity activity, int[] imageIds, String[] bookNames, String[] authorNames) {
 
         super(activity, R.layout.book_item, bookNames);
 
-        this.activity = activity;
+        this.activity = (MainActivity)activity;
         this.imageIds = imageIds;
         this.bookNames = bookNames;
         this.authorNames = authorNames;
+    }
 
-        LayoutInflater inflater = activity.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.book_item, null,true);
-        LinearLayout item = (LinearLayout) rowView.findViewById(R.id.mainBookItem);
+    @Override
+    public void registerDataSetObserver(DataSetObserver observer) {
+        super.registerDataSetObserver(observer);
+    }
 
-        item.setOnLongClickListener(pressHoldListener);
-        //cb.setOnTouchListener(pressTouchListener);
+    @Override
+    public void unregisterDataSetObserver(DataSetObserver observer) {
+        super.unregisterDataSetObserver(observer);
     }
 
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = activity.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.book_item, null,true);
 
-        ImageView imageIdsField = (ImageView) rowView.findViewById(R.id.img_book);
-        TextView bookNamesField = (TextView) rowView.findViewById(R.id.textView_book_name);
-        TextView authorNamesField = (TextView) rowView.findViewById(R.id.textView_book_author);
+        ImageView imageIdsField = rowView.findViewById(R.id.img_book);
+        TextView bookNamesField = rowView.findViewById(R.id.textView_book_name);
+        TextView authorNamesField = rowView.findViewById(R.id.textView_book_author);
 
         imageIdsField.setImageResource(imageIds[position]);
         bookNamesField.setText(bookNames[position]);
@@ -53,21 +58,32 @@ public class BookItemListAdapter extends ArrayAdapter {
         return rowView;
     }
 
-    private View.OnLongClickListener pressHoldListener = new View.OnLongClickListener() {
+    public void OnShortClickEvent(AdapterView<?> parent, final int position, final long id) {
+        String selectedItem = (String) parent.getItemAtPosition(position);
+        Log.d("BookDatabase", "clicked from Books: " + selectedItem);
 
-        @Override
-        public boolean onLongClick(View pView) {
-            /*LayoutInflater inflater = activity.getLayoutInflater();
-            View rowView = inflater.inflate(R.layout.book_item, null,true);
-            CheckBox cb = (CheckBox) rowView.findViewById(R.id.checkBox_to_delete);
+        new AlertDialog.Builder(activity)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("DELETING BOOK")
+                .setMessage("Are you sure you want to remove book " + bookNames[(int)id] + "?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Log.d("BookDatabase", "Yes, delete it!");
+                        FileTools.RemoveNthLineFromFile("books-info", (int)id, activity);
+                        activity.CreateBooksView();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) { }
+                })
+                .show();
+    }
 
-            // Do something when your hold starts here.
-            deleteMode = true;
-            //mFrameLayout.setBackgroundResource(R.drawable.trash_can);
-
-            cb.setVisibility(View.INVISIBLE);*/
-            Log.d("BookDatabase", "LONG CLICKED");
-            return true;
-        }
-    };
+    public boolean OnLongClickEvent(AdapterView<?> parent, int position, long id) {
+        String selectedItem = (String) parent.getItemAtPosition(position);
+        Log.d("BookDatabase", "clicked from Books: " + selectedItem);
+        return true;
+    }
 }

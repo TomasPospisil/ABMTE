@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainBookItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,15 +9,14 @@
 
     <ImageView
         android:id="@+id/img_book"
-        android:layout_width="120dp"
+        android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_weight="1"
         android:contentDescription="@string/book_image_content_description"
         app:srcCompat="@mipmap/image_book_unknown_foreground" />
 
     <LinearLayout
         android:id="@+id/linear_layout_book_item"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -30,12 +30,7 @@
             android:id="@+id/textView_book_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
 
-    <!--CheckBox
-        android:id="@+id/checkBox_to_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="0" /-->
+    </LinearLayout>
 
 </LinearLayout>
