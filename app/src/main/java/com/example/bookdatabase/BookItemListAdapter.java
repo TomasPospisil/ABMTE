@@ -2,6 +2,7 @@ package com.example.bookdatabase;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,6 +60,12 @@ public class BookItemListAdapter extends ArrayAdapter {
     }
 
     public void OnShortClickEvent(AdapterView<?> parent, final int position, final long id) {
+        Intent intent = new Intent(activity, DetailActivity.class);
+        intent.putExtra("id", (int)id);
+        activity.startActivity(intent);
+    }
+
+    public boolean OnLongClickEvent(AdapterView<?> parent, int position, final long id) {
         String selectedItem = (String) parent.getItemAtPosition(position);
         Log.d("BookDatabase", "clicked from Books: " + selectedItem);
 
@@ -79,11 +86,6 @@ public class BookItemListAdapter extends ArrayAdapter {
                     public void onClick(DialogInterface dialogInterface, int i) { }
                 })
                 .show();
-    }
-
-    public boolean OnLongClickEvent(AdapterView<?> parent, int position, long id) {
-        String selectedItem = (String) parent.getItemAtPosition(position);
-        Log.d("BookDatabase", "clicked from Books: " + selectedItem);
         return true;
     }
 }

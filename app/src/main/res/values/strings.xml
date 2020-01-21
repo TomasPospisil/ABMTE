@@ -3,4 +3,11 @@
     <string name="action_settings">Settings</string>
     <string name="addNewBook">Add New Book</string>
     <string name="book_image_content_description">Book Image</string>
+    <string name="book_name_label">Book Name</string>
+    <string name="content_image">Image</string>
+    <string name="author_label_name">Author</string>
+    <string name="save_button_name">Save</string>
+    <string name="cancel_button_name">Cancel</string>
+    <string name="Read_label_name">Read</string>
+    <string name="Comment_placeholder">Add a comment...</string>
 </resources>

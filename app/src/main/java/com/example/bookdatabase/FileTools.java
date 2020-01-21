@@ -108,4 +108,15 @@ public class FileTools {
             e.printStackTrace();
         }
     }
+
+    public static String GetNthLineFromFile(String filename, int lineIndex, Context context) {
+        try {
+            List<String> lines = GetLinesFromFile(filename, context);
+            return lines.get(lineIndex);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
 }
