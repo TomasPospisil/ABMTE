@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         AppendFAB();
+        AddListeners();
     }
 
     @Override
@@ -73,6 +75,20 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void AddListeners() {
+        final Button save = findViewById(R.id.button_addNewBook);
+        save.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                OnAddBook();
+            }
+        });
+    }
+
+    private void OnAddBook() {
+        Intent intent = new Intent(this, DetailActivity.class);
+        startActivity(intent);
     }
 
     public void CreateBooksView() {

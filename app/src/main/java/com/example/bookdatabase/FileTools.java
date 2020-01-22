@@ -87,15 +87,17 @@ public class FileTools {
         }
     }
 
-    public static void AppendLinesToFile(String filename, List<String> lines, Context context) {
+    public static boolean AppendLinesToFile(String filename, List<String> lines, Context context) {
         try {
             FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_APPEND);
             for (String s : lines) {
                 outputStream.write(s.concat("\r\n").getBytes());
             }
             outputStream.close();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
