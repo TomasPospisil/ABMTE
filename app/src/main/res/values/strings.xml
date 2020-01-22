@@ -10,4 +10,7 @@
     <string name="cancel_button_name">Cancel</string>
     <string name="Read_label_name">Read</string>
     <string name="Comment_placeholder">Add a comment...</string>
+    <string name="get_back_label">Get Back</string>
+    <string name="edit_label">Edit</string>
+    <string name="label_content_detail">This book doesn\'t contain any comment...</string>
 </resources>

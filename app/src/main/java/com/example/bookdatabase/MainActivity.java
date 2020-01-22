@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void AddListeners() {
-        final Button save = findViewById(R.id.button_addNewBook);
-        save.setOnClickListener(new View.OnClickListener() {
+        final Button addBook = findViewById(R.id.button_addNewBook);
+        addBook.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 OnAddBook();
             }
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void OnAddBook() {
-        Intent intent = new Intent(this, DetailActivity.class);
+        Intent intent = new Intent(this, EditActivity.class);
         startActivity(intent);
     }
 
