@@ -63,14 +63,13 @@
             android:id="@+id/checkBox_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:text="@string/Read_label_name"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView_edit"
-            app:layout_constraintTop_toBottomOf="@+id/authorName_edit" />
+            app:layout_constraintEnd_toEndOf="@+id/imageView_edit"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_edit" />
 
         <EditText
             android:id="@+id/content_edit"
@@ -87,7 +86,7 @@
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ratingBar_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBox_edit" />
 
         <Button
             android:id="@+id/button_cancel"
@@ -121,11 +120,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView_edit"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox_edit" />
+            app:layout_constraintTop_toBottomOf="@+id/authorName_edit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

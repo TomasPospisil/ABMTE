@@ -9,7 +9,7 @@
     tools:layout_editor_absoluteY="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rating_counter_detail"
+        android:id="@+id/activityLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".DetailActivity">
@@ -37,6 +37,8 @@
             android:focusable="false"
             android:hint="@string/book_name_label"
             android:inputType="textPersonName"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +58,8 @@
             android:focusable="false"
             android:hint="@string/author_label_name"
             android:inputType="textPersonName"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,16 +72,16 @@
             android:layout_width="0dp"
             android:layout_height="259dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="10dp"
             android:background="@android:color/transparent"
             android:ems="10"
             android:focusable="false"
-            android:textIsSelectable="true"
             android:gravity="left|center_vertical"
             android:hint="@string/label_content_detail"
             android:inputType="textMultiLine"
             android:padding="10dp"
+            android:textIsSelectable="true"
             android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,6 +127,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView_detail"
             app:layout_constraintTop_toBottomOf="@+id/authorName_detail" />
+
+        <CheckBox
+            android:id="@+id/checkBox_detail"
+            android:layout_width="fill_parent"
+            android:layout_height="37dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="15dp"
+            android:buttonTint="@color/colorPrimaryDark"
+            android:clickable="false"
+            android:enabled="false"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="19sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_detail" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

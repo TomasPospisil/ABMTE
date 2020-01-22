@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ public class EditActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.label_book_name_edit)).setText(nodes[0]);
         ((TextView) findViewById(R.id.authorName_edit)).setText(nodes[1]);
+        ((RatingBar) findViewById(R.id.ratingBar_edit)).setRating(Float.valueOf(nodes[2]));
+        ((CheckBox) findViewById(R.id.checkBox_edit)).setChecked(Boolean.parseBoolean(nodes[3]));
+        ((TextView) findViewById(R.id.content_edit)).setText(nodes[4]);
         ((ImageView) findViewById(R.id.imageView_edit)).setImageResource(R.mipmap.image_book_unknown_foreground);
     }
 
@@ -104,24 +109,16 @@ public class EditActivity extends AppCompatActivity {
 
 
     private void SaveNewBook() {
-        String bookName = ((TextView) findViewById(R.id.label_book_name_edit)).getText().toString();
-        String authorName = ((TextView) findViewById(R.id.authorName_edit)).getText().toString();
-
         List<String> line = new ArrayList<>();
-        line.add(bookName + " \t" + authorName);
+        line.add(getLineForSavingToFile());
 
         FileTools.AppendLinesToFile(fileName, line,this);
     }
 
     private void UpdateBook() {
-        String bookName = ((TextView) findViewById(R.id.label_book_name_edit)).getText().toString();
-        String authorName = ((TextView) findViewById(R.id.authorName_edit)).getText().toString();
-
-        String line = bookName + "  \t" + authorName;
-
         List<String> backup = FileTools.GetLinesFromFile(fileName, this);
         List<String> actual = FileTools.GetLinesFromFile(fileName, this);
-        actual.set(bookId, line);
+        actual.set(bookId, getLineForSavingToFile());
 
         FileTools.RemoveFile(fileName, this);
 
@@ -132,6 +129,16 @@ public class EditActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    private String getLineForSavingToFile() {
+        String bookName = ((TextView) findViewById(R.id.label_book_name_edit)).getText().toString();
+        String authorName = ((TextView) findViewById(R.id.authorName_edit)).getText().toString();
+        String rating = String.valueOf(((RatingBar)findViewById(R.id.ratingBar_edit)).getRating());
+        String isRead = Boolean.toString(((CheckBox) findViewById(R.id.checkBox_edit)).isChecked());
+        String comment = ((TextView) findViewById(R.id.content_edit)).getText().toString();
+
+        return bookName + "\t" + authorName + "\t" + rating + "\t" + isRead + "\t" + comment;
     }
 
     private void ShowErrorDialog() {

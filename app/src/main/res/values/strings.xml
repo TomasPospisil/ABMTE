@@ -13,4 +13,6 @@
     <string name="get_back_label">Get Back</string>
     <string name="edit_label">Edit</string>
     <string name="label_content_detail">This book doesn\'t contain any comment...</string>
+    <string name="checkbox_label_read">This book is read</string>
+    <string name="checkbox_label_not_read">This book is not read yet</string>
 </resources>
