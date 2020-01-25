@@ -104,16 +104,18 @@ public class MainActivity extends AppCompatActivity {
 
         String bookNames[] = new String[books.size()];
         String bookAuthors[] = new String[books.size()];
+        float ratings[] = new float[books.size()];
         int bookImages[] = new int[books.size()];
 
         for (int i = 0; i < books.size(); ++i) {
             String[] nodes = books.get(i).split("\\t");
             bookNames[i] = nodes[0];
             bookAuthors[i] = nodes[1];
+            ratings[i] = Float.valueOf(nodes[2]);
             bookImages[i] = R.mipmap.image_book_unknown_foreground;
         }
 
-        bookItemListAdapter = new BookItemListAdapter(this, bookImages, bookNames, bookAuthors);
+        bookItemListAdapter = new BookItemListAdapter(this, bookImages, bookNames, bookAuthors, ratings);
         listView = findViewById(R.id.list_books);
         listView.setAdapter(bookItemListAdapter);
 

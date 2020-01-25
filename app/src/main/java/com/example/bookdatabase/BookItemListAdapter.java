@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -23,8 +24,10 @@ public class BookItemListAdapter extends ArrayAdapter {
     public int[] imageIds;
     public String[] bookNames;
     public String[] authorNames;
+    public float[] ratings;
 
-    public BookItemListAdapter(Activity activity, int[] imageIds, String[] bookNames, String[] authorNames) {
+    public BookItemListAdapter(Activity activity, int[] imageIds, String[] bookNames,
+                               String[] authorNames, float[] ratings) {
 
         super(activity, R.layout.book_item, bookNames);
 
@@ -32,6 +35,7 @@ public class BookItemListAdapter extends ArrayAdapter {
         this.imageIds = imageIds;
         this.bookNames = bookNames;
         this.authorNames = authorNames;
+        this.ratings = ratings;
     }
 
     @Override
@@ -51,10 +55,12 @@ public class BookItemListAdapter extends ArrayAdapter {
         ImageView imageIdsField = rowView.findViewById(R.id.img_book);
         TextView bookNamesField = rowView.findViewById(R.id.textView_book_name);
         TextView authorNamesField = rowView.findViewById(R.id.textView_book_author);
+        RatingBar ratingBarField = rowView.findViewById(R.id.ratingBar_listView);
 
         imageIdsField.setImageResource(imageIds[position]);
         bookNamesField.setText(bookNames[position]);
         authorNamesField.setText(authorNames[position]);
+        ratingBarField.setRating(ratings[position]);
 
         return rowView;
     }

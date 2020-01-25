@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/img_book"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:contentDescription="@string/book_image_content_description"
         app:srcCompat="@mipmap/image_book_unknown_foreground" />
 
@@ -24,12 +24,29 @@
         <TextView
             android:id="@+id/textView_book_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView_book_author"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="24dp"
+            android:textSize="16sp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar_listView"
+            style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:clickable="false"
+            android:isIndicator="true"
+            android:longClickable="false"
+            android:numStars="5"
+            android:paddingTop="7dp"
+            android:scaleX="1.0"
+            android:scaleY="1.0" />
 
     </LinearLayout>
 
