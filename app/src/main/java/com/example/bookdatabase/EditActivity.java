@@ -23,7 +23,6 @@ public class EditActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("BookDatabase", "got here");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
@@ -46,7 +45,7 @@ public class EditActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.authorName_edit)).setText(nodes[1]);
         ((RatingBar) findViewById(R.id.ratingBar_edit)).setRating(Float.valueOf(nodes[2]));
         ((CheckBox) findViewById(R.id.checkBox_edit)).setChecked(Boolean.parseBoolean(nodes[3]));
-        ((TextView) findViewById(R.id.content_edit)).setText(nodes[4]);
+        ((TextView) findViewById(R.id.content_edit)).setText(nodes[4].trim());
         ((ImageView) findViewById(R.id.imageView_edit)).setImageResource(R.mipmap.image_book_unknown_foreground);
     }
 
@@ -94,7 +93,6 @@ public class EditActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (bookId == -1) {
                             SaveNewBook();
-                            finish();
                         } else {
                             UpdateBook();
                         }
@@ -107,27 +105,36 @@ public class EditActivity extends AppCompatActivity {
                 .show();
     }
 
-
     private void SaveNewBook() {
+        String newLine = getLineForSavingToFile();
+        if (newLine == null) {
+            return;
+        }
+
         List<String> line = new ArrayList<>();
-        line.add(getLineForSavingToFile());
+        line.add(newLine);
 
         FileTools.AppendLinesToFile(fileName, line,this);
+        finish();
     }
 
     private void UpdateBook() {
+        String newLine = getLineForSavingToFile();
+        if (newLine == null) {
+            return;
+        }
+
         List<String> backup = FileTools.GetLinesFromFile(fileName, this);
         List<String> actual = FileTools.GetLinesFromFile(fileName, this);
-        actual.set(bookId, getLineForSavingToFile());
+        actual.set(bookId, newLine);
 
         FileTools.RemoveFile(fileName, this);
 
         if (!FileTools.AppendLinesToFile(fileName, actual, this)) {
             FileTools.AppendLinesToFile(fileName, backup, this);
-            ShowErrorDialog();
-        } else {
-            finish();
+            ShowErrorDialog("An unexpected error occurred during saving book.");
         }
+        finish();
 
     }
 
@@ -138,21 +145,25 @@ public class EditActivity extends AppCompatActivity {
         String isRead = Boolean.toString(((CheckBox) findViewById(R.id.checkBox_edit)).isChecked());
         String comment = ((TextView) findViewById(R.id.content_edit)).getText().toString();
 
-        return bookName + "\t" + authorName + "\t" + rating + "\t" + isRead + "\t" + comment;
+        if (bookName.trim().isEmpty() || authorName.trim().isEmpty()) {
+            ShowErrorDialog("Book or author is empty!");
+            return null;
+        }
+
+        return bookName + "\t" + authorName + "\t" + rating + "\t" + isRead + "\t" +
+                (!comment.isEmpty() ? comment : " ");
     }
 
-    private void ShowErrorDialog() {
+    private void ShowErrorDialog(String message) {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Something went wrong :(")
-                .setMessage("An unexpected error occurred during saving book.")
+                .setMessage(message)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
+                    @Override public void onClick(DialogInterface dialogInterface, int i) { }
                 })
                 .show();
+
     }
 }
 

@@ -26,12 +26,10 @@ public class DetailActivity extends AppCompatActivity {
         bookId = getIntent().getIntExtra("id", -1);
 
         SetListeners();
-        //FillData(bookId);
     }
 
     @Override
     protected void onResume() {
-        Log.d("BookDatabase", "onresume");
         super.onResume();
         FillData(bookId);
     }
@@ -44,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.authorName_detail)).setText(nodes[1]);
         ((RatingBar) findViewById(R.id.ratingBar)).setRating(Float.valueOf(nodes[2]));
         ((CheckBox) findViewById(R.id.checkBox_detail)).setChecked(Boolean.parseBoolean(nodes[3]));
-        ((TextView) findViewById(R.id.content_detail)).setText(nodes[4]);
+        ((TextView) findViewById(R.id.content_detail)).setText(nodes[4].trim());
         ((ImageView) findViewById(R.id.imageView_detail)).setImageResource(R.mipmap.image_book_unknown_foreground);
 
         CheckBox read = (findViewById(R.id.checkBox_detail));
