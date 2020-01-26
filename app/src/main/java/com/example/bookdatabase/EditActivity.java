@@ -29,6 +29,7 @@ public class EditActivity extends AppCompatActivity {
     private int bookId;
     private final String fileName = "books-info";
 
+    private String imageFrom = "";
     private int GALLERY = 1;
     private String imagePath;
     private final String noPictureTag = "no-pic";
@@ -115,14 +116,16 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void choosePhotoFromGallery() {
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-        startActivityForResult(galleryIntent, GALLERY);
+        imageFrom = "gallery";
+        startActivityForResult(intent, GALLERY);
     }
 
     private void takePhotoFromCamera() {
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+        imageFrom = "camera";
         startActivityForResult(intent, CAMERA);
     }
 
@@ -134,7 +137,7 @@ public class EditActivity extends AppCompatActivity {
         }
 
         ImageView imageview = findViewById(R.id.imageView_edit);
-        if (requestCode == GALLERY) {
+        if (imageFrom == "gallery") {
             if (data != null) {
                 Uri contentURI = data.getData();
                 try {
@@ -146,10 +149,10 @@ public class EditActivity extends AppCompatActivity {
                 }
             }
 
-        } else if (requestCode == CAMERA) {
+        } else if (imageFrom == "camera") {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-            imageview.setImageBitmap(thumbnail);
             imagePath = FileTools.saveImage(thumbnail, this);
+            imageview.setImageBitmap(thumbnail);
         }
     }
 
