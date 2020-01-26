@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.io.File;
 import java.lang.*;
 
 public class BookItemListAdapter extends ArrayAdapter {
@@ -86,8 +88,7 @@ public class BookItemListAdapter extends ArrayAdapter {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        FileTools.RemoveNthLineFromFile("books-info", (int)id, activity);
-                        activity.CreateBooksView();
+                        RemoveBook((int)id);
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -96,5 +97,19 @@ public class BookItemListAdapter extends ArrayAdapter {
                 })
                 .show();
         return true;
+    }
+
+    private void RemoveBook(int id) {
+        String fileName = "books-info";
+        String line = FileTools.GetNthLineFromFile(fileName, id, activity);
+        String[] nodes = line.split("\\t");
+        String imgName = nodes[4];
+
+        if (FileTools.Exists(imgName, activity)) {
+            FileTools.RemoveFile(imgName, activity);
+        }
+
+        FileTools.RemoveNthLineFromFile(fileName, id, activity);
+        activity.CreateBooksView();
     }
 }
