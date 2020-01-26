@@ -1,7 +1,10 @@
 package com.example.bookdatabase;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -9,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.util.Log;
 import android.view.View;
@@ -16,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.List;
@@ -24,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     ListView listView;
     BookItemListAdapter bookItemListAdapter;
+
+    private final String noPictureTag = "no-pic";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,14 +112,14 @@ public class MainActivity extends AppCompatActivity {
         String bookNames[] = new String[books.size()];
         String bookAuthors[] = new String[books.size()];
         float ratings[] = new float[books.size()];
-        int bookImages[] = new int[books.size()];
+        String bookImages[] = new String[books.size()];
 
         for (int i = 0; i < books.size(); ++i) {
             String[] nodes = books.get(i).split("\\t");
             bookNames[i] = nodes[0];
             bookAuthors[i] = nodes[1];
             ratings[i] = Float.valueOf(nodes[2]);
-            bookImages[i] = R.mipmap.image_book_unknown_foreground;
+            bookImages[i] = nodes[4];
         }
 
         bookItemListAdapter = new BookItemListAdapter(this, bookImages, bookNames, bookAuthors, ratings);

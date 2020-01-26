@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,18 +24,20 @@ import java.lang.*;
 public class BookItemListAdapter extends ArrayAdapter {
 
     public final MainActivity activity;
-    public int[] imageIds;
+    public String[] images;
     public String[] bookNames;
     public String[] authorNames;
     public float[] ratings;
 
-    public BookItemListAdapter(Activity activity, int[] imageIds, String[] bookNames,
+    private final String noPictureTag = "no-pic";
+
+    public BookItemListAdapter(Activity activity, String[] images, String[] bookNames,
                                String[] authorNames, float[] ratings) {
 
         super(activity, R.layout.book_item, bookNames);
 
         this.activity = (MainActivity)activity;
-        this.imageIds = imageIds;
+        this.images = images;
         this.bookNames = bookNames;
         this.authorNames = authorNames;
         this.ratings = ratings;
@@ -57,7 +62,13 @@ public class BookItemListAdapter extends ArrayAdapter {
         TextView authorNamesField = rowView.findViewById(R.id.textView_book_author);
         RatingBar ratingBarField = rowView.findViewById(R.id.ratingBar_listView);
 
-        imageIdsField.setImageResource(imageIds[position]);
+        if (FileTools.Exists(images[position], activity)) {
+            Bitmap imgBitmap = BitmapFactory.decodeFile(FileTools.getAbsolutePath(images[position], activity));
+            imageIdsField.setImageBitmap(imgBitmap);
+        } else {
+            imageIdsField.setImageResource(R.mipmap.image_book_unknown_foreground);
+        }
+
         bookNamesField.setText(bookNames[position]);
         authorNamesField.setText(authorNames[position]);
         ratingBarField.setRating(ratings[position]);
