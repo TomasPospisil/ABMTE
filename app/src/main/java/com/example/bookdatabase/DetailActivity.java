@@ -18,7 +18,6 @@ public class DetailActivity extends AppCompatActivity {
 
     private int bookId;
     private final String fileName = "books-info";
-    private final String noPictureTag = "no-pic";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +46,9 @@ public class DetailActivity extends AppCompatActivity {
 
         try {
             if (FileTools.Exists(nodes[4], this)) {
-                Log.d("BookDatabase", "exists: " + nodes[4]);
                 Bitmap imgBitmap = BitmapFactory.decodeFile(FileTools.getAbsolutePath(nodes[4], this));
                 ((ImageView) findViewById(R.id.imageView_detail)).setImageBitmap(imgBitmap);
             } else {
-                Log.d("BookDatabase", "does not exist: " + nodes[4]);
                 ((ImageView) findViewById(R.id.imageView_detail)).setImageResource(R.mipmap.image_book_unknown_foreground);
             }
         }
@@ -59,7 +56,6 @@ public class DetailActivity extends AppCompatActivity {
             Log.d("BookDatabase", e.getMessage());
             return;
         }
-
 
         ((TextView) findViewById(R.id.content_detail)).setText(nodes[5].trim());
 

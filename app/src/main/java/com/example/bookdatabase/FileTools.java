@@ -2,9 +2,7 @@ package com.example.bookdatabase;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -19,6 +17,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class FileTools {
+
     public static List<String> GetLinesFromFile(String filename, Context context) {
         List<String> lines = new ArrayList<>();
 
@@ -34,7 +33,7 @@ public class FileTools {
             fileInputStream.close();
             bufferedReader.close();
         } catch(Exception e) {
-            Log.d(context.getResources().getString(R.string.app_name), e.getMessage());
+            Log.d("BookDatabase", e.toString());
         }
         return lines;
     }
@@ -44,28 +43,7 @@ public class FileTools {
             File file = new File(context.getFilesDir(), filename);
             file.delete();
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void WriteTestDataToFile(String filename, Context context) {
-
-        FileOutputStream outputStream;
-        String[] data = new String[] {
-                "Book Name 1\tAuthor Name 1\t2.5\ttrue\tno-pic\tThis is some comment 1.\r\n",
-                "Book Name 2\tAuthor Name 2\t3.5\ttrue\tno-pic\tThis is some comment 2.\r\n",
-                "Book Name 3\tAuthor Name 3\t4.5\ttrue\tno-pic\tThis is some comment 3.\r\n",
-                "Book Name 4\tAuthor Name 4\t1.5\tfalse\tno-pic\tThis is some comment 4.\r\n",
-                "Book Name 5\tAuthor Name 5\t2.5\tfalse\tno-pic\tThis is some comment 5.\r\n"
-        };
-        try {
-            outputStream = context.openFileOutput(filename, Context.MODE_APPEND);
-            for (String s : data) {
-                outputStream.write(s.getBytes());
-            }
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("BookDatabase", e.toString());
         }
     }
 
@@ -74,7 +52,7 @@ public class FileTools {
             File file = new File(context.getFilesDir(), filename);
             file.createNewFile();
         } catch (Exception e) {
-            Log.d(context.getResources().getString(R.string.app_name), e.getMessage());
+            Log.d("BookDatabase", e.getMessage());
         }
     }
 
@@ -91,7 +69,7 @@ public class FileTools {
             AppendLinesToFile(filename, lines, context);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("BookDatabase", e.toString());
         }
     }
 
@@ -104,18 +82,8 @@ public class FileTools {
             outputStream.close();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("BookDatabase", e.toString());
             return false;
-        }
-    }
-
-    public static void AppendLineToFile(String filename, String line, Context context) {
-        try {
-            FileOutputStream outputStream = context.openFileOutput(filename, Context.MODE_APPEND);
-            outputStream.write(line.concat("\r\n").getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -125,7 +93,7 @@ public class FileTools {
             return lines.get(lineIndex);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            Log.d("BookDatabase", e.toString());
             return "";
         }
     }
@@ -143,9 +111,8 @@ public class FileTools {
             fo.close();
 
             return f.getName();
-        } catch (IOException e1) {
-            Log.d("BookDatabase", e1.getMessage());
-            Log.d("BookDatabase", e1.getStackTrace().toString());
+        } catch (IOException e) {
+            Log.d("BookDatabase", e.toString());
             return "";
         }
     }

@@ -17,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,6 +59,7 @@ public class EditActivity extends AppCompatActivity {
         ((CheckBox) findViewById(R.id.checkBox_edit)).setChecked(Boolean.parseBoolean(nodes[3]));
 
         if (FileTools.Exists(nodes[4], this)) {
+            imagePath = nodes[4];
             Bitmap imgBitmap = BitmapFactory.decodeFile(FileTools.getAbsolutePath(nodes[4], this));
             ((ImageView) findViewById(R.id.imageView_edit)).setImageBitmap(imgBitmap);
         } else {
@@ -94,8 +94,6 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void OnImageViewClick() {
-        Log.d("BookDatabase", "image clicked");
-
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle("Select Action");
         String[] pictureDialogItems = {"Select photo from gallery", "Capture photo from camera" };
@@ -142,19 +140,16 @@ public class EditActivity extends AppCompatActivity {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
                     imagePath = FileTools.saveImage(bitmap, this);
-                    Log.d("BookDatabase", "From gallery saved to: " + imagePath);
                     imageview.setImageBitmap(bitmap);
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show();
+                    Log.d("BookDatabase", e.toString());
                 }
             }
 
-        } else /*if (requestCode == CAMERA)*/ {
+        } else if (requestCode == CAMERA) {
             Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
             imageview.setImageBitmap(thumbnail);
             imagePath = FileTools.saveImage(thumbnail, this);
-            Log.d("BookDatabase", "From camera saved to: " + imagePath);
         }
     }
 

@@ -1,36 +1,27 @@
 package com.example.bookdatabase;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.res.ResourcesCompat;
-
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView listView;
-    BookItemListAdapter bookItemListAdapter;
-
-    private final String noPictureTag = "no-pic";
+    private ListView listView;
+    private BookItemListAdapter bookItemListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -99,14 +85,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void CreateBooksView() {
-        Log.d("BookDatabase", "Creating new!");
         String booksInfoFile = "books-info";
         if (!FileTools.Exists(booksInfoFile, this)) {
             FileTools.CreateFile(booksInfoFile, this);
         }
 
-        //FileTools.RemoveFile(booksInfoFile, this);
-        //FileTools.WriteTestDataToFile(booksInfoFile, this);
         List<String> books = FileTools.GetLinesFromFile(booksInfoFile, this);
 
         String bookNames[] = new String[books.size()];

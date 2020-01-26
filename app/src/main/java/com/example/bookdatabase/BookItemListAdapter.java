@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +26,6 @@ public class BookItemListAdapter extends ArrayAdapter {
     public String[] bookNames;
     public String[] authorNames;
     public float[] ratings;
-
-    private final String noPictureTag = "no-pic";
 
     public BookItemListAdapter(Activity activity, String[] images, String[] bookNames,
                                String[] authorNames, float[] ratings) {
@@ -83,9 +79,6 @@ public class BookItemListAdapter extends ArrayAdapter {
     }
 
     public boolean OnLongClickEvent(AdapterView<?> parent, int position, final long id) {
-        String selectedItem = (String) parent.getItemAtPosition(position);
-        Log.d("BookDatabase", "clicked from Books: " + selectedItem);
-
         new AlertDialog.Builder(activity)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("DELETING BOOK")
@@ -93,7 +86,6 @@ public class BookItemListAdapter extends ArrayAdapter {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("BookDatabase", "Yes, delete it!");
                         FileTools.RemoveNthLineFromFile("books-info", (int)id, activity);
                         activity.CreateBooksView();
                     }
